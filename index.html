@@ -393,30 +393,6 @@ const lightingPlan = [
   "exterior": true
  },
  {
-  "id": 25,
-  "kind": "pink60",
-  "pdfCentre": [
-   792.5851,
-   575.7975
-  ],
-  "x": 11.552,
-  "y": 0.788,
-  "room": "寢室西南",
-  "exterior": false
- },
- {
-  "id": 26,
-  "kind": "pink60",
-  "pdfCentre": [
-   792.585,
-   499.69984999999997
-  ],
-  "x": 11.552,
-  "y": 2.936,
-  "room": "寢室西北",
-  "exterior": false
- },
- {
   "id": 27,
   "kind": "pink60",
   "pdfCentre": [
@@ -527,7 +503,19 @@ const lightingPlan = [
  {
   "id": 36,
   "kind": "ceiling12",
-  "fixture": {"name":"IKEA NYMÅNE pendant 204.071.45","type":"pendant","diameter":0.40,"depth":0.12,"bottom":1.50,"fluxConfirmed":false,"dimensionsNote":"Diameter official; shade depth and hanging height provisional; three E26 bulbs not yet specified","lumens":1800,"colourTemperatureK":2700,"lightColour":"#ffa757","source":"https://www.ikea.com/jp/ja/p/nymane-pendant-lamp-white-20407145/"},
+  "fixture": {
+   "name": "IKEA NYMÅNE pendant 204.071.45",
+   "type": "pendant",
+   "diameter": 0.4,
+   "depth": 0.12,
+   "bottom": 1.5,
+   "fluxConfirmed": false,
+   "dimensionsNote": "Diameter official; shade depth and hanging height provisional; three E26 bulbs not yet specified",
+   "lumens": 1800,
+   "colourTemperatureK": 2700,
+   "lightColour": "#ffa757",
+   "source": "https://www.ikea.com/jp/ja/p/nymane-pendant-lamp-white-20407145/"
+  },
   "pdfCentre": [
    630.82875,
    499.63915000000003
@@ -544,10 +532,11 @@ const lightingPlan = [
    845.07255,
    540.22435
   ],
-  "x": 13.033,
+  "x": 12.483,
   "y": 1.792,
   "room": "寢室",
-  "exterior": false
+  "exterior": false,
+  "adjustment": "2026-09-18: moved 550 mm toward bed foot (west); PDF centre retained as source reference"
  },
  {
   "id": 38,
