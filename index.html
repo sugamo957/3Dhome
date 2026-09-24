@@ -15,7 +15,7 @@
 <body><header><div class="eyebrow">RESIDENCE / 1F</div><h1>住宅空間・比例模型</h1><p>16.470 × 10.065 m 軸線範圍 · 天花高 2.400 m</p></header>
 <div id="viewport" role="img" aria-label="依據構造A與構造B建立的住宅三維模型"></div>
 <aside id="detail-legend" hidden></aside><div id="note">拖曳旋轉 · 滾輪縮放 · 右鍵平移<br>淡綠外框＝新圖確認的家具尺寸範圍，非產品外觀。<br>原有材質示意保留；格局不變。</div>
-<div id="controls"><button id="focus-home">回到我家</button><button id="focus-pick" aria-pressed="false">選觀看中心</button><label class="view-choice">視角 <select id="view-select"><option value="dollhouse">全屋</option><option value="top">俯視</option><option value="living">客廳</option><option value="dining">餐廳</option><option value="bedroom">寢室</option><option value="entry">玄關</option><option value="storage">玄關收納室</option><option value="kitchen">廚房</option><option value="study">洋室</option><option value="site">全景・外構</option><option value="garden">庭院</option><option value="parking">停車場</option><option value="neighbors">鄰家</option><option value="neighborplan">鄰家俯視</option></select></label><button id="door">關閉所有房門</button><details id="more-controls"><summary>顯示／匯出</summary><div><button id="exterior-toggle" class="active">外構：開</button><button id="eaves-toggle" class="active">屋簷：開</button><button id="carport-roof">車棚屋面開／關</button><button id="shutter-toggle">車庫捲門開／關</button><button id="labels">房間標示</button><button id="export">下載 3D 模型</button></div></details></div>
+<div id="controls"><button id="focus-home">回到我家</button><button id="focus-pick" aria-pressed="false">選觀看中心</button><label class="view-choice">視角 <select id="view-select"><option value="dollhouse">全屋</option><option value="top">俯視</option><option value="living">客廳</option><option value="dining">餐廳</option><option value="bedroom">寢室</option><option value="entry">玄關</option><option value="storage">玄關收納室</option><option value="kitchen">廚房</option><option value="study">洋室</option><option value="site">全景・外構</option><option value="garden">庭院</option><option value="parking">停車場</option><option value="neighbors">鄰家</option><option value="neighborplan">鄰家俯視</option></select></label><button id="door">關閉所有房門</button><details id="more-controls"><summary>顯示／匯出</summary><div><button id="exterior-toggle" class="active">外構：開</button><button id="eaves-toggle" class="active">屋簷：開</button><button id="carport-roof">車棚屋面開／關</button><button id="labels">房間標示</button><button id="export">下載 3D 模型</button></div></details></div>
 <p id="navigation-status" role="status" aria-live="polite">滾輪跟隨游標縮放；雙擊位置設為中心。觸控可雙指縮放與平移。</p>
 <style>#navigation-status{position:absolute;left:32px;top:103px;max-width:320px;z-index:2;padding:8px 12px;background:#ffffffe6;border-radius:8px;font-size:12px;line-height:1.65;pointer-events:none;color:#43594b}.hide-ui #navigation-status,.editing #navigation-status{display:none}#viewport canvas:focus{outline:none}@media(max-width:700px){#navigation-status{left:14px;top:76px;max-width:210px;font-size:11px}}</style>
 <style>
@@ -1542,18 +1542,14 @@ function addExterior({THREE,house,data,walls}){
  for(const dy of [-2.9,2.9]){const mesh=box('Carport perimeter beam',cx,cy+dy,ground+2.5,6,.08,.12,m.silver);roof.attach(mesh)}
  for(const dx of [-3,3]){const mesh=box('Carport side beam',cx+dx,cy,ground+2.5,.08,5.8,.12,m.silver);roof.attach(mesh)}
  for(let dx=-3;dx<3;dx+=.6){const mesh=box('Silver polycarbonate roof panel',cx+dx+.3,cy,ground+2.54,.59,5.8,.018,polycarbonate);roof.attach(mesh);const rib=box('Carport roof rib',cx+dx,cy,ground+2.50,.028,5.8,.075,m.silver);roof.attach(rib)}
- const gate=data.gate,gx=(gate.a[0]+gate.b[0])/2,gy=(gate.a[1]+gate.b[1])/2;
- for(const x of [gx-2.9,gx+2.9])box('LIXIL W56 H23 shutter post',x,gy,ground,.20,.27,2.65,m.black);
- box('LIXIL shutter housing',gx,gy,ground+2.3,6,.40,.35,m.black);
- const shutter=new THREE.Group();shutter.name='Aluminium shutter curtain';shutter.visible=false;group.add(shutter);
- for(let h=.025;h<2.3;h+=.075){const mesh=box('Aluminium shutter slat',gx,gy,ground+h,5.6,.04,.071,m.silver);shutter.attach(mesh)}
+ // Carport entrance shutter, housing and dedicated posts removed by user request.
  edge('Shed reserved footprint only',paths.shedReserve,ground+.02,.018,.025,m.darkStone);
  // Courtyard planter conflicts with the retained wall; mailbox dimensions are not specified.
  // Keep their plan records for later confirmation instead of placing intersecting or guessed solids.
  group.userData.deferred=['Courtyard olive planter: 600 mm diameter, wall conflict','Vico DB120: detailed dimensions unconfirmed'];
  const vehicles=addParkedVehicles(THREE,group,cp,ground+.012);
  const neighbors=addNeighborContext(THREE,group,{ground});
- return {group,roof,shutter,vehicles,neighbors,data};
+ return {group,roof,vehicles,neighbors,data};
 }
 
 // Plan coordinates and lengths are metres; indoor finished floor is z = 0.
@@ -2312,5 +2308,4 @@ function setExteriorVisible(value){exterior.group.visible=value;originalExterior
 document.getElementById('exterior-toggle').onclick=()=>setExteriorVisible(!exterior.group.visible);
 document.getElementById('carport-roof').onclick=()=>{exterior.roof.visible=!exterior.roof.visible;needsRender=true;};
 document.getElementById('eaves-toggle').onclick=()=>{eaveGroup.visible=!eaveGroup.visible;const b=document.getElementById('eaves-toggle');b.textContent='屋簷：'+(eaveGroup.visible?'開':'關');b.classList.toggle('active',eaveGroup.visible);needsRender=true;};
-document.getElementById('shutter-toggle').onclick=()=>{exterior.shutter.visible=!exterior.shutter.visible;needsRender=true;};
 view(new URLSearchParams(location.search).get('view')||'dollhouse');render();window.modelReady=true;requestAnimationFrame(tick);</script></body></html>
